@@ -12,6 +12,7 @@ public class Main {
 		String linea;
 		try {
 			// Leo la linea
+			// hola
 			linea = br.readLine();
 			//hago el split y tengo un vector con los "numeros"
 			String[] numeros = linea.split(" ");
