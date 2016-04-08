@@ -39,7 +39,7 @@ public class Triangulo {
 	}
 
 	private TipoTriangulo isEquilatero() {
-		return (lado1==lado2 && lado2==3) ? TipoTriangulo.EQUILATERO: TipoTriangulo.ISOCELES;
+		return (lado1==lado2 && lado2==lado3) ? TipoTriangulo.EQUILATERO: TipoTriangulo.ISOCELES;
 	}
 
 	public Integer getLado1() {
