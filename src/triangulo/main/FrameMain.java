@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class FrameMain {
 
@@ -48,6 +50,7 @@ public class FrameMain {
 		frame.setBounds(100, 100, 225, 217);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setTitle("Triangulo");
 		
 		JLabel lblLado = new JLabel("Lado 1:");
 		lblLado.setBounds(10, 34, 46, 14);
@@ -77,32 +80,64 @@ public class FrameMain {
 		textLado3.setColumns(10);
 		
 		JButton btnTipo = new JButton("Tipo");
+		btnTipo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent key) {
+				if(key.getKeyCode() == KeyEvent.VK_ENTER){
+					{
+						try{int ladoUno = Integer.parseInt(textLado1.getText());
+								int ladoDos = Integer.parseInt(textLado2.getText());
+								int ladoTres = Integer.parseInt(textLado3.getText());
+								calcularTipo(ladoUno,ladoDos ,ladoTres );
+								textLado1.setText("");
+								textLado2.setText("");
+								textLado3.setText("");
+								}
+						catch(Exception e){
+							JOptionPane.showMessageDialog(null, "Omitio ingresar algun valor o ingreso un valor no numerico, por favor ingrese 3 valores enteros positivos.");
+						}			
+				}
+			}
+		}
+		});
 		btnTipo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {	
-				calcularTipo(textLado1.getText(), textLado2.getText(), textLado3.getText());
-				textLado1.setText("");
-				textLado2.setText("");
-				textLado3.setText("");
+			public void actionPerformed(ActionEvent arg0) {
+				try{int ladoUno = Integer.parseInt(textLado1.getText());
+						int ladoDos = Integer.parseInt(textLado2.getText());
+						int ladoTres = Integer.parseInt(textLado3.getText());
+						calcularTipo(ladoUno,ladoDos ,ladoTres );
+						textLado1.setText("");
+						textLado2.setText("");
+						textLado3.setText("");
+						}
+				catch(Exception e){
+					JOptionPane.showMessageDialog(null, "Omitio ingresar algun valor o ingreso un valor no numerico, por favor ingrese 3 valores enteros positivos.");
+				}
 			}
 		});
 		btnTipo.setBounds(52, 133, 89, 23);
-		frame.getContentPane().add(btnTipo);
-		
+		frame.getContentPane().add(btnTipo);	
 		JLabel lblIngreseElTamao = new JLabel("Ingrese el tama\u00F1o de cada lado");
 		lblIngreseElTamao.setBounds(10, 11, 177, 14);
 		frame.getContentPane().add(lblIngreseElTamao);
 	}
 	
-	private void calcularTipo(String lado1, String lado2, String lado3){
-		try {
-			Triangulo triangulo = new Triangulo();
-			triangulo.setLadosTriangulos(Integer.parseInt(lado1), Integer.parseInt(lado2),
-					Integer.parseInt(lado3));
-			//System.out.println(triangulo.getTipoTrinagulo());
-			JOptionPane.showMessageDialog(null, triangulo.getTipoTrinagulo());
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(null, "Los valores ingresados NO son numéricos");
+	private void calcularTipo(int lado1, int lado2, int lado3){
+		if(lado1 < 0 || lado2 < 0 || lado3 < 0)
+			JOptionPane.showMessageDialog(null, "Ingreso uno o mas numeros negativos, por favor ingrese 3 valores enteros positivos.");
+		else{
+				if(lado1 == 0 || lado2 == 0 || lado3 == 0)
+					JOptionPane.showMessageDialog(null, "Ningun lado puede tener valor 0, por favor ingrese 3 valores enteros positivos.");
+				else
+					try {
+						Triangulo triangulo = new Triangulo();
+						triangulo.setLadosTriangulos(lado1, lado2,lado3);
+						//System.out.println(triangulo.getTipoTrinagulo());
+						JOptionPane.showMessageDialog(null, triangulo.getTipoTrinagulo());
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
+					}
+			}
 		}
-	}
 	}
 ;
